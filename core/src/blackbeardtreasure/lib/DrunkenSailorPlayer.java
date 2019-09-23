@@ -11,14 +11,14 @@ import java.util.Set;
 
 public class DrunkenSailorPlayer extends AbstractPlayer {
     private ArrayList<Coordinates> possibleMoves;
-    private GameBoard board;
-    private CPUState cpuState;
+    private final GameBoard board;
+    private CpuState cpuState;
 
     public DrunkenSailorPlayer(String name, Coordinates location, Texture winScreen,
                                Sound winSound, Sound duelSound, Sound duelWinSound, TextureRegion avatarCanvas , int x, int y, GameBoard board) {
         super(name, location, board, winScreen, winSound, duelSound, duelWinSound, avatarCanvas, x, y, 0);
         this.board = board;
-        cpuState = CPUState.WAITING;
+        cpuState = CpuState.WAITING;
     }
 
     public Coordinates selectMove(int roll) {
@@ -56,19 +56,17 @@ public class DrunkenSailorPlayer extends AbstractPlayer {
                     && computerMove.getY() < board.getHeight())
                     && (board.isAt(computerMove) != LocationName.ROCK)) {
                 return computerMove;
-            } else {
-                continue;
             }
         }
     }
 
     @Override
-    public CPUState getCPUstate() {
+    public CpuState getCpuState() {
         return cpuState;
     }
 
     @Override
-    public void setCPUstate(CPUState newState) {
+    public void setCPUstate(CpuState newState) {
         this.cpuState = newState;
     }
 

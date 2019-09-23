@@ -3,10 +3,10 @@ package blackbeardtreasure.lib;// Keys are of four types: rum, cutlass, parrot a
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Key {
-    private LocationName defaultLocation;
+    private final LocationName defaultLocation;
     private boolean acquired;
-    private TextureRegion keyCanvas;
-    private Coordinates startPosition;
+    private final TextureRegion keyCanvas;
+    private final Coordinates startPosition;
 
     public Key(LocationName defaultLocation, TextureRegion keyCanvas, Coordinates startPosition) {
         this.defaultLocation = defaultLocation;

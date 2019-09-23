@@ -1,6 +1,6 @@
 package blackbeardtreasure.lib;
 
-public enum CPUState {
+public enum CpuState {
     ROLLING,
     MOVING,
     WAITING

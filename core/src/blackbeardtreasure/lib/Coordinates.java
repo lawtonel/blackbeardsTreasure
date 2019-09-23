@@ -3,8 +3,8 @@ package blackbeardtreasure.lib;
 import static blackbeardtreasure.lib.test.TileTest.scale;
 
 public class Coordinates {
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     public Coordinates(int x, int y){
         this.x = x;
@@ -19,11 +19,7 @@ public class Coordinates {
 
     @Override
     public boolean equals(Object o) {
-        //if (this == o) return true;
-        //if (o == null || getClass() != o.getClass()) return false;
-
         Coordinates other = (Coordinates) o;
-
         return x == other.getX() && y == other.getY();
     }
 

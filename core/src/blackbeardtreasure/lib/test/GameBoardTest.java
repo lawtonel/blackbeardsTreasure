@@ -1,13 +1,11 @@
-package lib.test;
+package blackbeardtreasure.lib.test;
 
 import blackbeardtreasure.lib.Coordinates;
 import blackbeardtreasure.lib.GameBoard;
 import blackbeardtreasure.lib.GameBoardImpl;
-import blackbeardtreasure.lib.LocationName;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class GameBoardTest {
@@ -21,6 +19,7 @@ public class GameBoardTest {
         //TODO: assert.equals the locations
     }
 
+    // TODO complete these tests - use Mockito
     @Test
     public void testIsAt() {
         Coordinates coordinates;

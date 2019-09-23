@@ -12,7 +12,7 @@ import static blackbeardtreasure.lib.test.TileTest.retinaURL;
 import static blackbeardtreasure.lib.test.TileTest.scale;
 
 public class Location {
-    private Map<Coordinates, Key> locationKeys;
+    private final Map<Coordinates, Key> locationKeys;
     private LocationName name;
 
     public Location(int numberOfKeys, LocationName locationName) {

@@ -1,13 +1,10 @@
 package blackbeardtreasure.lib;
 
-/**
- * Created by lawtonel on 20/10/2017.
- */
 public class GameImpl implements Game {
-    private Player[] players;
+    private final Player[] players;
     private Player nextTurn;
-    private GameMaster blackbeard;
-    private GameBoard board;
+    private final GameMaster blackbeard;
+    private final GameBoard board;
     private Player leftDuelist;
     private Player rightDuelist;
     private boolean isDuelOver;
@@ -15,23 +12,19 @@ public class GameImpl implements Game {
     private Difficulty difficultyLevel;
 
     public GameImpl(Player[] players) {
-        //setup players
+        // Setup game basics
         this.players = players;
         nextTurn = players[0];
 
-        //setup board
         board = new GameBoardImpl();
 
-        // setup gamemaster
         blackbeard = new GameMasterImpl("The Ghost of Blackbeard", new Coordinates(0, 0), players, this);
         blackbeardState = GameMasterState.NO_ACTION;
 
-        // setup duel
         isDuelOver = true;
         leftDuelist = null;
         rightDuelist = null;
 
-        // set difficulty
         difficultyLevel = Difficulty.EASY;
     }
 

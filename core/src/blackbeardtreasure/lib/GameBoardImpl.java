@@ -1,12 +1,10 @@
-/**GameBoardImpl models the board area as a 2D array of Location Names**/
-
 package blackbeardtreasure.lib;
 
 public class GameBoardImpl implements GameBoard {
     private final int WIDTH = 14;
     private final int HEIGHT = 14;
     private LocationName[][] grid;
-    private Location[] locations;
+    private final Location[] locations;
 
     public GameBoardImpl(){
         LocationName[] c1 = new LocationName[14];

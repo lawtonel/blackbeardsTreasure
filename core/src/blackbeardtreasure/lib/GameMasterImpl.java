@@ -1,7 +1,5 @@
 package blackbeardtreasure.lib;
 
-import sun.util.resources.cldr.vai.LocaleNames_vai;
-
 import java.util.Random;
 import java.util.Set;
 
@@ -19,9 +17,7 @@ public class GameMasterImpl implements GameMaster {
 
     public GameMasterImpl(String name, Coordinates startLocation, Player[] players, Game bbGame) {
         this.name = name;
-        Coordinates startLocation1 = startLocation;
         this.rand = new Random();
-        Player[] players1 = players;
         this.bbGame = bbGame;
         Player currentPlayer = null;
     }
@@ -98,9 +94,9 @@ public class GameMasterImpl implements GameMaster {
             LocationName locationName = playerKey.getDefaultLocation();
             Location[] locations = bbGame.getBoard().getLocations();
 
-            for (int j = 0; j < locations.length; j++) {
-                if(locationName.equals(locations[j])) {
-                    locations[j].returnKeytoStart(playerKey);
+            for (Location location : locations) {
+                if (locationName.equals(location)) {
+                    location.returnKeytoStart(playerKey);
                 }
             }
 

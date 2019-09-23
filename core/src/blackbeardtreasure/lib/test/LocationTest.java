@@ -2,18 +2,14 @@ package blackbeardtreasure.lib.test;
 
 import blackbeardtreasure.lib.Coordinates;
 import blackbeardtreasure.lib.Location;
-import blackbeardtreasure.lib.LocationName;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-
-
+// TODO complete these tests
 public class LocationTest {
     private Location island;
-
-
 
     @BeforeEach
     public void setUp() {
@@ -46,12 +42,12 @@ public class LocationTest {
     public void testNoKeysToTake() {
         Coordinates playerCoordinates = new Coordinates(1,1);
         island.takeKey(playerCoordinates);
-        Throwable exception = assertThrows(IllegalStateException.class, ()->{island.takeKey(playerCoordinates);});
+        Throwable exception = assertThrows(IllegalStateException.class, ()-> island.takeKey(playerCoordinates));
     }
 
     @Test
     public void testPlayerNotAtKeyLocation() {
         Coordinates playerCoordinates = new Coordinates(1,0);
-        Throwable exception = assertThrows(IllegalStateException.class, ()->{island.takeKey(playerCoordinates);});
+        Throwable exception = assertThrows(IllegalStateException.class, ()-> island.takeKey(playerCoordinates));
     }
 }

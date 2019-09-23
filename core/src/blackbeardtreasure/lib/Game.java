@@ -1,26 +1,23 @@
 package blackbeardtreasure.lib;
 
-import java.util.Set;
-
 public interface Game {
-    public boolean canDuel(Player opponent);
-    public boolean duel(Player opponent, int attackRoll);
-    public boolean isGameOver();
-    public Player whoseTurn();
-    public String gameMasterAction();
-    public void play();
-    public void setNextTurn();
-    public Player[] getAllPlayers();
-    public void setBlackBeardState(GameMasterState blackbeardState);
-    public GameMasterState getBlackbeardState();
-    // public boolean guessTreasure(Coordinates coordinates);
-    public boolean isDuelOver();
-    public void setDuelOver(boolean duelOver);
-    public Player getLeftDuelist();
-    public Player getRightDuelist();
-    public void setLeftDuelist(Player player);
-    public void setRightDuelist(Player player);
-    public GameBoard getBoard();
-    public Difficulty getDifficultyLevel();
-    public void setDifficulty(Difficulty difficulty);
+    boolean canDuel(Player opponent);
+    boolean duel(Player opponent, int attackRoll);
+    boolean isGameOver();
+    Player whoseTurn();
+    String gameMasterAction();
+    void play();
+    void setNextTurn();
+    Player[] getAllPlayers();
+    void setBlackBeardState(GameMasterState blackbeardState);
+    GameMasterState getBlackbeardState();
+    boolean isDuelOver();
+    void setDuelOver(boolean duelOver);
+    Player getLeftDuelist();
+    Player getRightDuelist();
+    void setLeftDuelist(Player player);
+    void setRightDuelist(Player player);
+    GameBoard getBoard();
+    Difficulty getDifficultyLevel();
+    void setDifficulty(Difficulty difficulty);
 }

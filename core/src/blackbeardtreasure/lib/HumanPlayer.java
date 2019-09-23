@@ -41,12 +41,12 @@ public class HumanPlayer extends AbstractPlayer {
     }
 
     @Override
-    public CPUState getCPUstate() {
+    public CpuState getCpuState() {
         return null;
     }
 
     @Override
-    public void setCPUstate(CPUState newState) {
+    public void setCPUstate(CpuState newState) {
 
     }
 }

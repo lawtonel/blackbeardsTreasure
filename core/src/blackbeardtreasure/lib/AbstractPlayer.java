@@ -8,28 +8,24 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-/**
- * Created by lawtonel on 30/10/2017.
- */
 public abstract class AbstractPlayer implements Player {
-    private String name;
-    private Set<Key> playerKeys;
-    protected Coordinates currentLocation;
-    private TextureRegion avatarCanvas;
-    private Texture winScreen;
-    private Sound winSound, duelSound, duelWinSound;
+    Coordinates currentLocation;
 
+    private final GameBoard gameBoard;
+    private final String name;
+    private final Set<Key> playerKeys;
+    private TextureRegion avatarCanvas;
+    private final Texture winScreen;
+    private final Sound winSound;
+    private final Sound duelSound;
+    private final Sound duelWinSound;
     private float X;
     private float Y;
     private int movement;
     private int movesBeforeNextDuel;
+    private int turns;
     private char move;
     private boolean isDrunk;
-
-    private GameBoard gameBoard;
-
-    private int turns;
-
 
     public AbstractPlayer(String name, Coordinates location, GameBoard board, Texture winScreen,
                           Sound winSound, Sound duelSound, Sound duelWinSound,
@@ -110,7 +106,7 @@ public abstract class AbstractPlayer implements Player {
     }
 
     @Override
-    public void setmovesBeforeNextDuel() {
+    public void setMovesBeforeNextDuel() {
         movesBeforeNextDuel = 2;
     }
 
@@ -131,13 +127,6 @@ public abstract class AbstractPlayer implements Player {
 
     @Override
     public boolean hasAllKeys() {
-        //Can reinstate this if we decide a player can have multiple keys of same type
-        /*int keyTypes = 0;
-        for(LocationName locationName : LocationName.values()){
-            if(playerKeys.equals(new Key(locationName, new TextureRegion(new Texture("images/key.png"), 0,0,36,36)))){
-                keyTypes++;
-            }
-        }*/
         return playerKeys.size() >= 4;
     }
 
@@ -149,7 +138,7 @@ public abstract class AbstractPlayer implements Player {
     @Override
     public void takeKey(LocationName locationName) {
         for(Key key : playerKeys) {
-            if(!key.getDefaultLocation().equals(locationName) && key != null) {
+            if(!key.getDefaultLocation().equals(locationName)) {
                 playerKeys.add(gameBoard.getKey(currentLocation));
             }
         }

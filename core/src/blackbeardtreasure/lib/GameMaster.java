@@ -1,6 +1,6 @@
 package blackbeardtreasure.lib;
 
 public interface GameMaster {
-    public String randomAction(Player currentPlayer);
-    public String getName();
+    String randomAction(Player currentPlayer);
+    String getName();
 }

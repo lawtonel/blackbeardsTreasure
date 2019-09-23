@@ -21,11 +21,10 @@ import java.util.Set;
 
 import static blackbeardtreasure.lib.Coordinates.coordinateXtoPixels;
 import static blackbeardtreasure.lib.Coordinates.coordinateYtoPixels;
-import static blackbeardtreasure.lib.Coordinates.pixelsToCoordinates;
 import static blackbeardtreasure.lib.TutorialState.*;
 
 public class TileTest extends ApplicationAdapter implements InputProcessor {
-    private TextureRegion setUpScreenRgn, characterSelectRegion, pauseScreenRgn, optionsMenuRgn, highlightedArea, rulesScreenRgn;
+    private TextureRegion setUpScreenRgn, characterSelectRegion, pauseScreenRgn, optionsMenuRgn, rulesScreenRgn;
     private TextureRegion[] diceFrames;
     private Animation diceAnimation;
     private float elapsedTime;
@@ -44,7 +43,7 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
     private OrthographicCamera camera;
     private SpriteBatch batch;
 
-    public static boolean isMac = false;
+    public static final boolean isMac = false;
 
     private final int cellSize = scale(50);
     private int lastRoll;
@@ -435,13 +434,13 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
             }
 
         } else {
-            if(bbGame.whoseTurn().getCPUstate() == CPUState.WAITING) {
+            if(bbGame.whoseTurn().getCpuState() == CpuState.WAITING) {
                 bbFont.draw(batch, "It's " + bbGame.whoseTurn().getName() + "'s turn!", scale(250), scale(150));
                 bbFont.draw(batch, "Press 'c' to continue", scale(250), scale(100));
-            } else if(bbGame.whoseTurn().getCPUstate() == CPUState.ROLLING) {
+            } else if(bbGame.whoseTurn().getCpuState() == CpuState.ROLLING) {
                 bbFont.draw(batch, bbGame.whoseTurn().getName() + " is rolling the dice!", scale(250), scale(150));
                 bbFont.draw(batch, "Press 'c' to continue", scale(250),scale( 100));
-            } else if(bbGame.whoseTurn().getCPUstate() == CPUState.MOVING) {
+            } else if(bbGame.whoseTurn().getCpuState() == CpuState.MOVING) {
                 bbFont.draw(batch, bbGame.whoseTurn().getName() + " has rolled a " + lastRoll, scale(250), scale(150));
                 bbFont.draw(batch, "Press 'c' to continue", scale(250), scale(100));
             }
@@ -718,8 +717,13 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
         switch(currentState){
 
             case SETUP:
-                break;
             case CHARACTERSELECT:
+            case PAUSED:
+            case RULES:
+            case OPTIONS:
+            case HOWTOPLAY:
+            case DUEL:
+            case WON:
                 break;
             case PLAYING:
                 if (bbGame.whoseTurn().getMovement() > 0) {
@@ -823,21 +827,16 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                 }
                 }
                 break;
-            case PAUSED:
-                break;
-            case WON:
-                break;
-            case DUEL:
-                break;
-            case HOWTOPLAY:
-                break;
-            case OPTIONS:
-                break;
-            case RULES:
-                break;
             case TUTORIAL:
                 switch(currentTutorialState){
                     case S1:
+                    case S10:
+                    case S9:
+                    case S8:
+                    case S7:
+                    case S6:
+                    case S5:
+                    case S4:
                         break;
                     case S2:
                         if(keycode == Input.Keys.UP) {
@@ -848,20 +847,6 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                         if(keycode == Input.Keys.UP) {
                             currentTutorialState = S4;
                         }
-                        break;
-                    case S4:
-                        break;
-                    case S5:
-                        break;
-                    case S6:
-                        break;
-                    case S7:
-                        break;
-                    case S8:
-                        break;
-                    case S9:
-                        break;
-                    case S10:
                         break;
                 }
                 break;
@@ -884,7 +869,11 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
 
         switch(currentState){
             case SETUP:
-                break;
+            case RULES:
+            case OPTIONS:
+            case HOWTOPLAY:
+            case WON:
+            case PAUSED:
             case CHARACTERSELECT:
                 break;
             case PLAYING:
@@ -913,26 +902,26 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                 // Skip next player CPU
                 if (character == 'c'
                         && currentState == GameState.PLAYING
-                        && bbGame.whoseTurn().getCPUstate() == CPUState.WAITING
+                        && bbGame.whoseTurn().getCpuState() == CpuState.WAITING
                         && bbGame.getBlackbeardState() == GameMasterState.NO_ACTION) {
                     Random rand = new Random();
                     lastRoll = (rand.nextInt(6) + 1);
-                    bbGame.whoseTurn().setCPUstate(CPUState.ROLLING);
+                    bbGame.whoseTurn().setCPUstate(CpuState.ROLLING);
                 } else if (character == 'c'
                         && currentState == GameState.PLAYING
-                        && bbGame.whoseTurn().getCPUstate() == CPUState.ROLLING
+                        && bbGame.whoseTurn().getCpuState() == CpuState.ROLLING
                         && bbGame.getBlackbeardState() == GameMasterState.NO_ACTION) {
-                    bbGame.whoseTurn().setCPUstate(CPUState.MOVING);
+                    bbGame.whoseTurn().setCPUstate(CpuState.MOVING);
                 } else if (character == 'c'
                         && currentState == GameState.PLAYING
-                        && bbGame.whoseTurn().getCPUstate() == CPUState.MOVING
+                        && bbGame.whoseTurn().getCpuState() == CpuState.MOVING
                         && bbGame.getBlackbeardState() == GameMasterState.NO_ACTION) {
                     Coordinates move = bbGame.whoseTurn().selectMove(lastRoll);
                     bbGame.whoseTurn().movePlayer(move);
                     if(bbGame.whoseTurn().hasTreasure()) {
                         currentState = GameState.WON;
                     } else {
-                        bbGame.whoseTurn().setCPUstate(CPUState.WAITING);
+                        bbGame.whoseTurn().setCPUstate(CpuState.WAITING);
                         bbGame.setNextTurn();
                     }
                 }
@@ -978,10 +967,6 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                     }
                 }
             }
-                break;
-            case PAUSED:
-                break;
-            case WON:
                 break;
             case DUEL:
                 if (!bbGame.isDuelOver()
@@ -1040,18 +1025,12 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                     bbGame.setDuelOver(true);
                     bbGame.getRightDuelist().revertMove();
                     bbGame.getLeftDuelist().revertMove();
-                    bbGame.getLeftDuelist().setmovesBeforeNextDuel();
+                    bbGame.getLeftDuelist().setMovesBeforeNextDuel();
                     bbGame.setLeftDuelist(null);
                     bbGame.setRightDuelist(null);
                     currentState = GameState.PLAYING;
                 }
             }
-                break;
-            case HOWTOPLAY:
-                break;
-            case OPTIONS:
-                break;
-            case RULES:
                 break;
             case TUTORIAL:
                 switch(currentTutorialState) {
@@ -1061,28 +1040,22 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                         }
                         break;
                     case S2:
-                        break;
-                    case S3:
-                        break;
+                    case S10:
+                    case S9:
+                    case S8:
+                    case S6:
                     case S4:
+                    case S3:
                         break;
                     case S5:
                         if(character == 't'){
                             currentTutorialState = S6;
                         }
                         break;
-                    case S6:
-                        break;
                     case S7:
                         if(character == 't'){
                             currentTutorialState = S8;
                         }
-                        break;
-                    case S8:
-                        break;
-                    case S9:
-                        break;
-                    case S10:
                         break;
                 }
                 break;
@@ -1293,8 +1266,6 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                         if(screenX >= scale(750) && screenX <= scale(900) && screenY >= scale(750) && screenY <= scale(870)) {currentTutorialState = S2;}
                         break;
                     case S2:
-                        if(screenX >= scale(14) && screenX <= scale(29) && screenY >= scale(517) && screenY <= scale(532)) {currentTutorialState = S4;}
-                        break;
                     case S3:
                         if(screenX >= scale(14) && screenX <= scale(29) && screenY >= scale(517) && screenY <= scale(532)) {currentTutorialState = S4;}
                         break;
@@ -1302,11 +1273,10 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                         if(screenX >= 0 && screenX <= 900 && screenY >= 0 && screenY <= 820) {currentTutorialState = S5;}
                         break;
                     case S5:
+                    case S7:
                         break;
                     case S6:
                         if(screenX >= 0 && screenX <= scale(900) && screenY >= 0 && screenY <= scale(820)) {currentTutorialState = S7;}
-                        break;
-                    case S7:
                         break;
                     case S8:
                         if(screenX >= 0 && screenX <= scale(900) && screenY >= 0 && screenY <= scale(820)) {currentTutorialState = S9;}
@@ -1510,7 +1480,7 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                 batch.draw(diceFrames[lastRoll - 1], scale(695),scale( 10));
             }
         } else {
-            if(bbGame.whoseTurn().getCPUstate() == CPUState.ROLLING) {
+            if(bbGame.whoseTurn().getCpuState() == CpuState.ROLLING) {
                 elapsedTime += Gdx.graphics.getDeltaTime();
                 batch.draw((TextureRegion) diceAnimation.getKeyFrame(elapsedTime, true), scale(695),scale( 10));
                 if (diceAnimation.isAnimationFinished(elapsedTime)) {
