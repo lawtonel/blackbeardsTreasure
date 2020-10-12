@@ -1,4 +1,10 @@
-package blackbeardtreasure.lib;
+package com.blackbeardstreasure.game;
+
+import com.blackbeardstreasure.enums.Difficulty;
+import com.blackbeardstreasure.gamemaster.GameMaster;
+import com.blackbeardstreasure.gamemaster.GameMasterImpl;
+import com.blackbeardstreasure.gamemaster.GameMasterState;
+import com.blackbeardstreasure.player.Player;
 
 /**
  * Created by lawtonel on 20/10/2017.

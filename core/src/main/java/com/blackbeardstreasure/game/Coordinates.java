@@ -1,12 +1,17 @@
-package blackbeardtreasure.lib;
+package com.blackbeardstreasure.game;
 
-import static blackbeardtreasure.lib.test.TileTest.scale;
+import com.blackbeardstreasure.BlackbeardsTreasure;
 
 public class Coordinates {
     private int x;
     private int y;
 
     public Coordinates(int x, int y){
+        if (x < 0 || y < 0) {
+            throw new IndexOutOfBoundsException("Negative numbers not permitted");
+        } else if (x > 13 || y > 13) {
+            throw new IndexOutOfBoundsException("Game board maximum size is 14");
+        }
         this.x = x;
         this.y = y;
     }
@@ -40,14 +45,14 @@ public class Coordinates {
     }
 
     public static int coordinateXtoPixels(Coordinates coordinates) {
-        return coordinates.x*scale(50);
+        return coordinates.x* BlackbeardsTreasure.scale(50);
     }
 
     public static int coordinateYtoPixels(Coordinates coordinates) {
-        return (scale(900)-(coordinates.y*scale(50))-scale(50));
+        return (BlackbeardsTreasure.scale(900)-(coordinates.y* BlackbeardsTreasure.scale(50))- BlackbeardsTreasure.scale(50));
     }
 
     public static  Coordinates pixelsToCoordinates(int x, int y) {
-        return new Coordinates(x/scale(50),y/scale(50));
+        return new Coordinates(x/ BlackbeardsTreasure.scale(50),y/ BlackbeardsTreasure.scale(50));
     }
 }

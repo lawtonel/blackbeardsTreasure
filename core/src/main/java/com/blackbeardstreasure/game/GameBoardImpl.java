@@ -1,6 +1,6 @@
-/**GameBoardImpl models the board area as a 2D array of Location Names**/
+package com.blackbeardstreasure.game;
 
-package blackbeardtreasure.lib;
+import com.blackbeardstreasure.enums.LocationName;
 
 public class GameBoardImpl implements GameBoard {
     private final int WIDTH = 14;

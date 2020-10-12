@@ -1,6 +1,8 @@
-package blackbeardtreasure.lib;
+package com.blackbeardstreasure.game;
 
-import java.util.Set;
+import com.blackbeardstreasure.enums.Difficulty;
+import com.blackbeardstreasure.gamemaster.GameMasterState;
+import com.blackbeardstreasure.player.Player;
 
 public interface Game {
     public boolean canDuel(Player opponent);

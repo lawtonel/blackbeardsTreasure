@@ -1,16 +1,17 @@
-package blackbeardtreasure.lib;
+package com.blackbeardstreasure.player;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.blackbeardstreasure.enums.LocationName;
+import com.blackbeardstreasure.game.Coordinates;
+import com.blackbeardstreasure.game.GameBoard;
+import com.blackbeardstreasure.game.Key;
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
-/**
- * Created by lawtonel on 30/10/2017.
- */
 public abstract class AbstractPlayer implements Player {
     private String name;
     private Set<Key> playerKeys;
@@ -87,66 +88,44 @@ public abstract class AbstractPlayer implements Player {
         }
     }
 
-    @Override
-    public char getMove() {
+    public char getDuelMove() {
         return move;
     }
 
-    @Override
-    public void setMove(char m) {
+    public void setDuelMove(char m) {
         if (move == 'n') {
             move = m;
         }
     }
 
-    @Override
     public void revertMove() {
         move = 'n';
     }
 
-    @Override
     public boolean canDuel() {
         return movesBeforeNextDuel == 0;
     }
 
-    @Override
-    public void setmovesBeforeNextDuel() {
+    public void setMovesBeforeNextDuel() {
         movesBeforeNextDuel = 2;
     }
 
-    @Override
     public TextureRegion getAvatarCanvas() {
         return avatarCanvas;
     }
 
-    @Override
-    public void changeAvatar(Texture avatar) {
-        this.avatarCanvas = new TextureRegion(avatar, 36, 36);
-    }
-
-    @Override
     public String getName() {
         return name;
     }
 
-    @Override
     public boolean hasAllKeys() {
-        //Can reinstate this if we decide a player can have multiple keys of same type
-        /*int keyTypes = 0;
-        for(LocationName locationName : LocationName.values()){
-            if(playerKeys.equals(new Key(locationName, new TextureRegion(new Texture("images/key.png"), 0,0,36,36)))){
-                keyTypes++;
-            }
-        }*/
         return playerKeys.size() >= 4;
     }
 
-    @Override
     public boolean hasTreasure() {
         return playerKeys.equals(new Key(LocationName.TREASURE, null, (new Coordinates(7,6))));
     }
 
-    @Override
     public void takeKey(LocationName locationName) {
         for(Key key : playerKeys) {
             if(!key.getDefaultLocation().equals(locationName) && key != null) {
@@ -155,12 +134,10 @@ public abstract class AbstractPlayer implements Player {
         }
     }
 
-    @Override
     public void takeKeyFromOtherPlayer(Key key) {
         playerKeys.add(key);
     }
 
-    @Override
     public void giveKey(Player player) {
         Key playerKey = null;
         int i = 0;
@@ -176,24 +153,20 @@ public abstract class AbstractPlayer implements Player {
         playerKeys.remove(playerKey);
     }
 
-    @Override
     public Coordinates getLocation() {
         return currentLocation;
     }
 
-    @Override
     public void setLocation(Coordinates location) {
         currentLocation = location;
     }
 
-    @Override
     public void movePlayer(Coordinates c) {
         X = Coordinates.coordinateXtoPixels(c);
         Y = Coordinates.coordinateYtoPixels(c);
         currentLocation = c;
     }
 
-    @Override
     public void movePlayer(Coordinates coordinates, float newX, float newY) {
         X = newX;
         Y = newY;

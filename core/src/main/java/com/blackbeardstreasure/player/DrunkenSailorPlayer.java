@@ -1,8 +1,14 @@
-package blackbeardtreasure.lib;
+package com.blackbeardstreasure.player;
 
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.blackbeardstreasure.enums.CPUState;
+import com.blackbeardstreasure.enums.LocationName;
+import com.blackbeardstreasure.game.Coordinates;
+import com.blackbeardstreasure.game.GameBoard;
+import com.blackbeardstreasure.game.Key;
+import com.blackbeardstreasure.game.Location;
 
 import java.util.ArrayList;
 import java.util.Map;
