@@ -1,6 +1,7 @@
-package blackbeardtreasure.lib;// Keys are of four types: rum, cutlass, parrot and hat
+package com.blackbeardstreasure.game;// Keys are of four types: rum, cutlass, parrot and hat
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.blackbeardstreasure.enums.LocationName;
 
 public class Key {
     private LocationName defaultLocation;

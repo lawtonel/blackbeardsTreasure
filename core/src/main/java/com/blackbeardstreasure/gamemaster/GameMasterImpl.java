@@ -1,6 +1,11 @@
-package blackbeardtreasure.lib;
+package com.blackbeardstreasure.gamemaster;
 
-import sun.util.resources.cldr.vai.LocaleNames_vai;
+import com.blackbeardstreasure.game.Coordinates;
+import com.blackbeardstreasure.game.Key;
+import com.blackbeardstreasure.game.Location;
+import com.blackbeardstreasure.enums.LocationName;
+import com.blackbeardstreasure.game.Game;
+import com.blackbeardstreasure.player.Player;
 
 import java.util.Random;
 import java.util.Set;

@@ -1,4 +1,4 @@
-package blackbeardtreasure.lib;
+package com.blackbeardstreasure.game;
 
 public enum GameState {
     SETUP,

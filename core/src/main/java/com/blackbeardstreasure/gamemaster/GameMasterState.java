@@ -1,4 +1,4 @@
-package blackbeardtreasure.lib;
+package com.blackbeardstreasure.gamemaster;
 
 public enum GameMasterState {
     NO_ACTION,

@@ -1,4 +1,4 @@
-package blackbeardtreasure.lib;
+package com.blackbeardstreasure.enums;
 
 public enum LocationName {
     START,

@@ -1,7 +1,5 @@
-package blackbeardtreasure.lib.test;
+package com.blackbeardstreasure;
 
-import blackbeardtreasure.lib.*;
-import blackbeardtreasure.lib.Game;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -14,17 +12,25 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.blackbeardstreasure.enums.CPUState;
+import com.blackbeardstreasure.enums.Difficulty;
+import com.blackbeardstreasure.enums.LocationName;
+import com.blackbeardstreasure.enums.TutorialState;
+import com.blackbeardstreasure.game.*;
+import com.blackbeardstreasure.gamemaster.GameMasterState;
+import com.blackbeardstreasure.player.DrunkenSailorPlayer;
+import com.blackbeardstreasure.player.HumanPlayer;
+import com.blackbeardstreasure.player.Player;
 
 import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 
-import static blackbeardtreasure.lib.Coordinates.coordinateXtoPixels;
-import static blackbeardtreasure.lib.Coordinates.coordinateYtoPixels;
-import static blackbeardtreasure.lib.Coordinates.pixelsToCoordinates;
-import static blackbeardtreasure.lib.TutorialState.*;
+import static com.blackbeardstreasure.game.Coordinates.coordinateXtoPixels;
+import static com.blackbeardstreasure.game.Coordinates.coordinateYtoPixels;
+import static com.blackbeardstreasure.enums.TutorialState.*;
 
-public class TileTest extends ApplicationAdapter implements InputProcessor {
+public class BlackbeardsTreasure extends ApplicationAdapter implements InputProcessor {
     private TextureRegion setUpScreenRgn, characterSelectRegion, pauseScreenRgn, optionsMenuRgn, highlightedArea, rulesScreenRgn;
     private TextureRegion[] diceFrames;
     private Animation diceAnimation;
@@ -53,7 +59,7 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
 
     private BitmapFont font, playFont, playCurrentFont, bbFont;
 
-    private Game bbGame;
+    private GameImpl bbGame;
     private GameBoard gameBoard;
 
     private Sound footstep, getItem, evilLaugh, sword, nope;
@@ -72,7 +78,7 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
 
     private char leftDuelistMove, rightDuelistMove;
 
-    private TutorialState currentTutorialState = S1;
+    private TutorialState currentTutorialState = TutorialState.S1;
 
     public static int scale(int num) {
         if(isMac) {
@@ -587,11 +593,11 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                 bbFont.draw(batch, rightDuelistName + ": WINS!", scale(335), scale(700));
             }
             // Win cases - Rock beats scissors
-            else if (bbGame.getLeftDuelist().getMove() == 'q' && bbGame.getRightDuelist().getMove() == 'p'
+            else if (bbGame.getLeftDuelist().getDuelMove() == 'q' && bbGame.getRightDuelist().getDuelMove() == 'p'
                     // Paper beats rock
-                    || bbGame.getLeftDuelist().getMove() == 'w' && bbGame.getRightDuelist().getMove() == 'i'
+                    || bbGame.getLeftDuelist().getDuelMove() == 'w' && bbGame.getRightDuelist().getDuelMove() == 'i'
                     // Scissors beats paper
-                    || bbGame.getLeftDuelist().getMove() == 'e' && bbGame.getRightDuelist().getMove() == 'o') {
+                    || bbGame.getLeftDuelist().getDuelMove() == 'e' && bbGame.getRightDuelist().getDuelMove() == 'o') {
                 bbFont.draw(batch, leftDuelistName + ": WINS!", scale(335), scale(700));
             }
             // Lose case
@@ -841,7 +847,7 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                         break;
                     case S2:
                         if(keycode == Input.Keys.UP) {
-                            currentTutorialState = S3;
+                            currentTutorialState = TutorialState.S3;
                         }
                         break;
                     case S3:
@@ -994,7 +1000,7 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                         || character == 'e') {
                     hasLeftDuelistMoved = true;
                     leftDuelistMove = character;
-                    bbGame.getLeftDuelist().setMove(character);
+                    bbGame.getLeftDuelist().setDuelMove(character);
                 }
 
                 // Set right duelist move
@@ -1003,25 +1009,25 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                         || character == 'p') {
                     leftDuelistMove = character;
                     hasRightDuelistMoved = true;
-                    bbGame.getRightDuelist().setMove(character);
+                    bbGame.getRightDuelist().setDuelMove(character);
                 }
 
                 if (character == 'c'
-                        && bbGame.getLeftDuelist().getMove() != 'n'
-                        && bbGame.getRightDuelist().getMove() != 'n') {
+                        && bbGame.getLeftDuelist().getDuelMove() != 'n'
+                        && bbGame.getRightDuelist().getDuelMove() != 'n') {
 
 
                     // Draw case
-                    if (bbGame.getLeftDuelist().getMove() == bbGame.getRightDuelist().getMove()) {
+                    if (bbGame.getLeftDuelist().getDuelMove() == bbGame.getRightDuelist().getDuelMove()) {
                         bbGame.getLeftDuelist().giveKey(bbGame.getRightDuelist());
                         bbGame.getRightDuelist().getDuelWinSound().play();
                     }
                     // Win cases - Rock beats scissors
-                    else if (bbGame.getLeftDuelist().getMove() == 'q' && bbGame.getRightDuelist().getMove() == 'p'
+                    else if (bbGame.getLeftDuelist().getDuelMove() == 'q' && bbGame.getRightDuelist().getDuelMove() == 'p'
                             // Paper beats rock
-                            || bbGame.getLeftDuelist().getMove() == 'w' && bbGame.getRightDuelist().getMove() == 'i'
+                            || bbGame.getLeftDuelist().getDuelMove() == 'w' && bbGame.getRightDuelist().getDuelMove() == 'i'
                             // Scissors beats paper
-                            || bbGame.getLeftDuelist().getMove() == 'e' && bbGame.getRightDuelist().getMove() == 'o') {
+                            || bbGame.getLeftDuelist().getDuelMove() == 'e' && bbGame.getRightDuelist().getDuelMove() == 'o') {
                         bbGame.getRightDuelist().giveKey(bbGame.getLeftDuelist());
                         bbGame.getLeftDuelist().getDuelWinSound().play();
                     }
@@ -1040,7 +1046,7 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                     bbGame.setDuelOver(true);
                     bbGame.getRightDuelist().revertMove();
                     bbGame.getLeftDuelist().revertMove();
-                    bbGame.getLeftDuelist().setmovesBeforeNextDuel();
+                    bbGame.getLeftDuelist().setMovesBeforeNextDuel();
                     bbGame.setLeftDuelist(null);
                     bbGame.setRightDuelist(null);
                     currentState = GameState.PLAYING;
@@ -1068,14 +1074,14 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                         break;
                     case S5:
                         if(character == 't'){
-                            currentTutorialState = S6;
+                            currentTutorialState = TutorialState.S6;
                         }
                         break;
                     case S6:
                         break;
                     case S7:
                         if(character == 't'){
-                            currentTutorialState = S8;
+                            currentTutorialState = TutorialState.S8;
                         }
                         break;
                     case S8:
@@ -1293,8 +1299,6 @@ public class TileTest extends ApplicationAdapter implements InputProcessor {
                         if(screenX >= scale(750) && screenX <= scale(900) && screenY >= scale(750) && screenY <= scale(870)) {currentTutorialState = S2;}
                         break;
                     case S2:
-                        if(screenX >= scale(14) && screenX <= scale(29) && screenY >= scale(517) && screenY <= scale(532)) {currentTutorialState = S4;}
-                        break;
                     case S3:
                         if(screenX >= scale(14) && screenX <= scale(29) && screenY >= scale(517) && screenY <= scale(532)) {currentTutorialState = S4;}
                         break;
